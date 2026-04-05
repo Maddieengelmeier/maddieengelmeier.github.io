@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maddie Engelmeier</title>
+  <meta name="description" content="Thinking about AI, work, and what it means to be human in a rapidly changing workplace. Writing on Substack." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Maddie Engelmeier" />
+  <meta property="og:description" content="Thinking about AI, work, and what it means to be human in a rapidly changing workplace." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://madelineengelmeier.github.io" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:    #0f0f0f;
+      --muted:  #6b6b6b;
+      --faint:  #e8e4de;
+      --paper:  #f9f7f4;
+      --white:  #ffffff;
+      --accent: #c8522a;
+      --blue:   #2a6bc8;
+      --serif:  'Instrument Serif', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-color: var(--faint); }
+    .nav-name {
+      font-family: var(--serif); font-size: 1.1rem;
+      text-decoration: none; color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 0.78rem; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-substack {
+      background: var(--ink); color: var(--white) !important;
+      padding: 0.5rem 1rem; border-radius: 2px;
+      transition: background 0.2s !important;
+      font-weight: 500 !important;
+    }
+    .nav-substack:hover { background: var(--accent) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 4.5rem;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 5rem 3rem 5rem 4rem;
+      border-right: 1px solid var(--faint);
+    }
+    .eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .eyebrow::before {
+      content: ''; display: block;
+      width: 2rem; height: 1px; background: var(--accent);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 4.8vw, 4.5rem);
+      line-height: 1.06; letter-spacing: -0.02em;
+      font-weight: 400; margin-bottom: 1.75rem;
+    }
+    h1 em { font-style: italic; color: var(--muted); }
+    .hero-bio {
+      font-size: 1rem; color: var(--muted);
+      font-weight: 300; line-height: 1.85;
+      max-width: 42ch; margin-bottom: 2.5rem;
+    }
+    .hero-bio strong { color: var(--ink); font-weight: 400; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--sans); font-size: 0.82rem;
+      font-weight: 500; letter-spacing: 0.04em;
+      padding: 0.85rem 1.5rem; border-radius: 2px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, color 0.2s;
+    }
+    .btn-dark { background: var(--ink); color: var(--white); }
+    .btn-dark:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1px solid var(--faint);
+    }
+    .btn-outline:hover { border-color: var(--ink); }
+
+    .hero-right {
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 3rem;
+      gap: 2.5rem;
+    }
+    .hero-fact { display: flex; flex-direction: column; gap: 0.35rem; }
+    .fact-label {
+      font-size: 0.67rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .fact-value { font-size: 0.95rem; line-height: 1.55; color: var(--ink); }
+    .topics {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem;
+    }
+    .topic {
+      font-size: 0.72rem; letter-spacing: 0.04em;
+      background: var(--paper); border: 1px solid var(--faint);
+      color: var(--muted); padding: 0.25rem 0.7rem; border-radius: 20px;
+    }
+    .hero-divider { width: 2rem; height: 1px; background: var(--faint); }
+    .socials { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .social {
+      font-size: 0.72rem; letter-spacing: 0.06em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .social:hover { color: var(--ink); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .sec-header {
+      display: flex; align-items: baseline;
+      gap: 1.25rem; margin-bottom: 3.5rem;
+    }
+    .sec-num {
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      flex-shrink: 0; padding-top: 0.35rem;
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+    }
+    h2 em { font-style: italic; color: var(--muted); }
+
+    /* ── WRITING / SUBSTACK ── */
+    #writing { }
+    .substack-banner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; padding: 3rem;
+      background: var(--ink); border-radius: 3px;
+      flex-wrap: wrap; margin-bottom: 3rem;
+    }
+    .substack-left { display: flex; flex-direction: column; gap: 0.85rem; max-width: 54ch; }
+    .substack-label {
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #555;
+    }
+    .substack-headline {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400; color: var(--white); line-height: 1.2;
+    }
+    .substack-desc {
+      font-size: 0.9rem; color: #888;
+      font-weight: 300; line-height: 1.75;
+    }
+    .btn-substack {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--white); color: var(--ink);
+      font-family: var(--sans); font-size: 0.82rem;
+      font-weight: 500; letter-spacing: 0.04em;
+      padding: 0.9rem 1.75rem; border-radius: 2px;
+      text-decoration: none; white-space: nowrap; flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-substack:hover { background: var(--accent); color: var(--white); }
+
+    .writing-note {
+      font-size: 0.78rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .post-previews { display: flex; flex-direction: column; }
+    .post-preview {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.35rem 0; border-bottom: 1px solid var(--faint);
+      text-decoration: none; color: inherit;
+    }
+    .post-preview:first-child { border-top: 1px solid var(--faint); }
+    .post-preview:hover .post-title { color: var(--accent); }
+    .post-date {
+      font-size: 0.76rem; color: var(--muted);
+      min-width: 5.5rem; flex-shrink: 0;
+    }
+    .post-title {
+      font-family: var(--serif); font-size: 1.1rem;
+      font-weight: 400; letter-spacing: -0.01em;
+      transition: color 0.2s; flex: 1;
+    }
+    .post-status {
+      font-size: 0.65rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      border: 1px solid var(--faint);
+      padding: 0.2rem 0.55rem; border-radius: 20px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .post-status.coming { border-color: var(--accent); color: var(--accent); }
+    .post-arrow {
+      color: var(--faint); font-size: 0.85rem; flex-shrink: 0;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .post-preview:hover .post-arrow { color: var(--accent); transform: translate(2px,-2px); }
+
+    /* ── APPEARANCES ── */
+    #appearances { background: var(--paper); }
+    .appearances-list { display: flex; flex-direction: column; }
+    .appearance {
+      display: grid;
+      grid-template-columns: 2.75rem 1fr auto;
+      align-items: center; gap: 1.75rem;
+      padding: 1.75rem 0; border-bottom: 1px solid var(--faint);
+      text-decoration: none; color: inherit;
+    }
+    .appearance:first-child { border-top: 1px solid var(--faint); }
+    .appearance:hover .app-title-text { color: var(--accent); }
+    .app-icon-wrap {
+      width: 2.75rem; height: 2.75rem;
+      background: var(--white); border: 1px solid var(--faint);
+      border-radius: 3px; display: grid;
+      place-items: center; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .appearance-body { display: flex; flex-direction: column; gap: 0.3rem; }
+    .app-type {
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .app-title-text {
+      font-family: var(--serif); font-size: 1.05rem;
+      font-weight: 400; line-height: 1.35; transition: color 0.2s;
+    }
+    .app-venue { font-size: 0.8rem; color: var(--muted); margin-top: 0.1rem; }
+    .app-arrow {
+      color: var(--faint); font-size: 0.9rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .appearance:hover .app-arrow { color: var(--accent); transform: translate(2px,-2px); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--ink); color: var(--white); }
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; max-width: 56rem;
+    }
+    .contact-left { display: flex; flex-direction: column; gap: 1.5rem; }
+    #contact h2 { color: var(--white); }
+    .contact-note {
+      font-size: 0.9rem; color: #888;
+      font-weight: 300; line-height: 1.85;
+      font-style: italic; max-width: 38ch;
+    }
+    .contact-alts { display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-alt {
+      font-size: 0.8rem; color: #555;
+      text-decoration: none; display: flex;
+      align-items: center; gap: 0.5rem;
+      transition: color 0.2s; letter-spacing: 0.02em;
+    }
+    .contact-alt:hover { color: #aaa; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    label {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #555;
+    }
+    input, textarea, select {
+      background: transparent; border: none;
+      border-bottom: 1px solid #222;
+      color: var(--white); font-family: var(--sans);
+      font-size: 0.95rem; font-weight: 300;
+      padding: 0.6rem 0; outline: none;
+      transition: border-color 0.2s; width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: #2e2e2e; }
+    input:focus, textarea:focus, select:focus { border-color: #555; }
+    select { cursor: pointer; }
+    select option { background: #111; }
+    textarea { resize: vertical; min-height: 4.5rem; }
+    .form-note { font-size: 0.73rem; color: #3a3a3a; font-style: italic; line-height: 1.5; }
+    .btn-send {
+      align-self: flex-start; background: var(--white); color: var(--ink);
+      border: none; font-family: var(--sans); font-size: 0.8rem;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.85rem 1.75rem; cursor: pointer; border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-send:hover { background: var(--accent); color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); border-top: 1px solid #191919;
+      padding: 1.75rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-name {
+      font-family: var(--serif); font-size: 0.9rem; color: #333;
+    }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.68rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #333;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #666; }
+
+    /* ── ANIMATIONS ── */
+    .fi {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fi.on { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 920px) {
+      nav { padding: 1.1rem 1.5rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 1.5rem 2.5rem; border-right: none; border-bottom: 1px solid var(--faint); }
+      .hero-right { padding: 2rem 1.5rem 4rem; gap: 2rem; }
+      section { padding: 4.5rem 1.5rem; }
+      .substack-banner { flex-direction: column; align-items: flex-start; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+      .appearance { grid-template-columns: 2.5rem 1fr auto; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-name">Maddie Engelmeier</a>
+  <ul class="nav-links">
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#appearances">Appearances</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://maddieengelmeier.substack.com/" target="_blank" class="nav-substack">Read on Substack ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left fi">
+    <div class="eyebrow">AI · Work · People</div>
+    <h1>Honest takes on<br>work, AI, and<br><em>being human.</em></h1>
+    <p class="hero-bio">
+      I work in tech and think constantly about what's actually happening to
+      <strong>people</strong> as AI reshapes how we work. The nuance, the anxiety,
+      the opportunity — and what it's like to navigate all of it as a
+      <strong>working mom.</strong>
+      This is my space to think out loud.
+    </p>
+    <div class="hero-actions">
+      <a href="https://maddieengelmeier.substack.com/" target="_blank" class="btn btn-dark">Read on Substack ↗</a>
+      <a href="#appearances" class="btn btn-outline">See my work</a>
+    </div>
+  </div>
+  <div class="hero-right fi" style="transition-delay:.15s;">
+    <div class="hero-fact">
+      <span class="fact-label">Day job</span>
+      <span class="fact-value">Working in tech — AI adoption & productivity</span>
+    </div>
+    <div class="hero-fact">
+      <span class="fact-label">Writing about</span>
+      <div class="topics">
+        <span class="topic">AI in the workplace</span>
+        <span class="topic">Workforce transformation</span>
+        <span class="topic">Working moms</span>
+        <span class="topic">Evolving tech</span>
+        <span class="topic">The human side</span>
+      </div>
+    </div>
+    <div class="hero-fact">
+      <span class="fact-label">What this is</span>
+      <span class="fact-value">A curious, creative outlet. Authentic unlike LinkedIn. Real discussions about things that actually matter.</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/madelineengelmeier/" target="_blank" class="social">LinkedIn</a>
+      <a href="https://maddieengelmeier.substack.com/" target="_blank" class="social">Substack</a>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING -->
+<section id="writing">
+  <div class="sec-header fi">
+    <span class="sec-num">01 — Writing</span>
+    <h2>Essays &amp;<br><em>honest takes</em></h2>
+  </div>
+
+  <div class="substack-banner fi">
+    <div class="substack-left">
+      <span class="substack-label">On Substack</span>
+      <div class="substack-headline">Thinking out loud about AI,<br>work, and what it means to be human.</div>
+      <p class="substack-desc">
+        Not thought leadership. Not a personal brand play. Just honest writing
+        about real things — AI and the workforce, what's changing for working
+        parents, and the questions nobody's asking loudly enough yet.
+      </p>
+    </div>
+    <a href="https://maddieengelmeier.substack.com/" target="_blank" class="btn-substack">
+      Subscribe free ↗
+    </a>
+  </div>
+
+  <!-- Placeholder posts — replace with real Substack post titles + URLs as you publish -->
+  <p class="writing-note fi">Coming soon — first posts</p>
+  <div class="post-previews fi">
+    <a href="https://maddieengelmeier.substack.com/" target="_blank" class="post-preview">
+      <span class="post-date">Up next</span>
+      <span class="post-title">What 1,000 AI agents actually taught me about humans</span>
+      <span class="post-status coming">Writing now</span>
+      <span class="post-arrow">↗</span>
+    </a>
+    <a href="https://maddieengelmeier.substack.com/" target="_blank" class="post-preview">
+      <span class="post-date">Soon</span>
+      <span class="post-title">The working mom in the age of AI — productivity gift or new pressure?</span>
+      <span class="post-status coming">Coming</span>
+      <span class="post-arrow">↗</span>
+    </a>
+    <a href="https://maddieengelmeier.substack.com/" target="_blank" class="post-preview" style="opacity:0.5;">
+      <span class="post-date"></span>
+      <span class="post-title" style="font-family:var(--sans);font-size:0.85rem;color:var(--muted);">More coming — subscribe to get notified →</span>
+      <span class="post-status"></span>
+      <span class="post-arrow"></span>
+    </a>
+  </div>
+</section>
+
+<!-- APPEARANCES -->
+<section id="appearances">
+  <div class="sec-header fi">
+    <span class="sec-num">02 — Appearances</span>
+    <h2>Talks &amp;<br><em>features</em></h2>
+  </div>
+  <div class="appearances-list fi">
+
+    <a href="https://youtu.be/dC6bxVvDH1k?si=Ce1GD5ZtR2dKlUqu" target="_blank" class="appearance">
+      <div class="app-icon-wrap">🎙</div>
+      <div class="appearance-body">
+        <span class="app-type">Podcast</span>
+        <div class="app-title-text">This New Way — How Motive Uses 1,000+ Agents to Unlock Productivity</div>
+        <div class="app-venue">August 2025 · 2.8k views</div>
+      </div>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a href="https://www.glean.com/resources/customer-stories/motive" target="_blank" class="appearance">
+      <div class="app-icon-wrap">📄</div>
+      <div class="appearance-body">
+        <span class="app-type">Case Study</span>
+        <div class="app-title-text">How Motive uses Glean to democratize AI and easily build agents that save employees thousands of hours</div>
+        <div class="app-venue">January 2026 · Glean</div>
+      </div>
+      <span class="app-arrow">↗</span>
+    </a>
+
+    <a href="https://youtu.be/lqJ6IhSyE1Y" target="_blank" class="appearance">
+      <div class="app-icon-wrap">🎤</div>
+      <div class="appearance-body">
+        <span class="app-type">Talk</span>
+        <div class="app-title-text">GleanGO — Breaking Down Data Silos: Unifying Structured & Unstructured Data with Natural Language</div>
+        <div class="app-venue">May 2025 · Glean</div>
+      </div>
+      <span class="app-arrow">↗</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner fi">
+    <div class="contact-left">
+      <div class="sec-header" style="margin-bottom:0.5rem;">
+        <span class="sec-num" style="color:#444;">03 — Contact</span>
+        <h2>Let's<br>talk</h2>
+      </div>
+      <p class="contact-note">
+        I'm here for real conversations — about AI, work, working parenthood,
+        or anything else that's rattling around in your head.
+        Not looking for freelance work, but always up for a genuine exchange.
+      </p>
+      <div class="contact-alts">
+        <a href="https://www.linkedin.com/in/madelineengelmeier/" target="_blank" class="contact-alt">↗ Connect on LinkedIn</a>
+        <a href="https://maddieengelmeier.substack.com/" target="_blank" class="contact-alt">↗ Follow on Substack</a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="field">
+        <label for="cn">Name</label>
+        <input type="text" id="cn" placeholder="Your name" />
+      </div>
+      <div class="field">
+        <label for="ce">Email</label>
+        <input type="email" id="ce" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label for="cr">What's this about?</label>
+        <select id="cr">
+          <option value="" disabled selected>Choose one</option>
+          <option>Feedback on something I wrote</option>
+          <option>Speaking or podcast invite</option>
+          <option>I want to share my own experience</option>
+          <option>Just want to say hi</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cm">Message</label>
+        <textarea id="cm" rows="4" placeholder="What's on your mind?"></textarea>
+      </div>
+      <p class="form-note">Not available for freelance or consulting engagements.</p>
+      <button class="btn-send" onclick="send()">Send message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Maddie Engelmeier</span>
+  <ul class="footer-links">
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#appearances">Appearances</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/in/madelineengelmeier/" target="_blank">LinkedIn</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Nav border on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 20);
+  }, { passive: true });
+
+  // Fade-in on scroll
+  const io = new IntersectionObserver(
+    es => es.forEach(e => e.isIntersecting && e.target.classList.add('on')),
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.fi').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.hero .fi').forEach(el => el.classList.add('on')), 100);
+
+  // Contact form
+  function send() {
+    const n = document.getElementById('cn').value.trim();
+    const e = document.getElementById('ce').value.trim();
+    const m = document.getElementById('cm').value.trim();
+    if (!n || !e || !m) { alert('Please fill in your name, email, and message.'); return; }
+    alert("Thanks for reaching out, " + n + "! I'll get back to you soon.");
+  }
+</script>
+</body>
+</html>
